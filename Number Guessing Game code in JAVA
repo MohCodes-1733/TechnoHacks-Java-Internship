@@ -1,0 +1,54 @@
+import java.util.Scanner;
+import java.util.Random;
+
+public class NumberGuessingGame {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+
+        int numberRange = random.nextInt(99) + 1;
+        int userGuess;
+        int attempts = 0;
+        boolean hintGiven = false;
+
+        System.out.println("Welcome to the Number Guessing Game!");
+        System.out.println("Guess a number between 1 and 100. Enter 0 to quit.");
+
+        while (true) {
+            System.out.println("Enter your guess:");
+            if (scanner.hasNextInt()) {
+                userGuess = scanner.nextInt();
+                if (userGuess == 0) {
+                    System.out.println("Quitting the game. The number was: " + numberRange);
+                    break;
+                }
+                attempts++;
+                if (userGuess == numberRange) {
+                    System.out.println("Hurray! You guessed it right in " + attempts + " attempts.");
+                    break;
+                } else {
+                    System.out.println("Oops, you made a wrong guess!Try again");
+                    if (!hintGiven) {
+                        hintGiven = true;
+                        if (numberRange % 2 == 0)
+                            System.out.println("Here's a hint: It's an even number.");
+                        else
+                            System.out.println("Here's a hint: It's an odd number.");
+                    } else if (attempts == 2) {
+                        if (numberRange > 50)
+                            System.out.println("Hint: The number is greater than 50.");
+                        else
+                            System.out.println("Hint: The number is less than or equal to 50.");
+                    } else if (attempts == 3) {
+                        System.out.println("Hint: Double of the number to be guessed is " + (2 * numberRange));
+                    }
+                }
+            } else {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.next(); 
+            }
+        }
+
+        scanner.close();
+    }
+}
